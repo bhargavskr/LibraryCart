@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>valid</title>
+<script language="javascript">
+function validname(f1)
+{
+  var err="";
+  var reg=/^[a-zA-Z0-9_]*$/
+  if(f1.username.value="")
+  {
+      
+      f1.username.style.background='yellow';
+      err=" enter the username";
+  } 
+  else if((f1.username.value.length<5)||(f1.username.value.length>15))
+  {
+       
+      f1.username.style.background='yellow';
+      err=" enter the correct length of username ";
+   }
+   else if(!reg.test(f.username.value))
+   {
+       f1.username.style.background='yellow';
+      err=" contain illegal charater";  
+   }
+   else
+  {
+        f1.username.style.background='yellow';
+   }
+
+if(err!=" ")
+ { 
+   alert(err);
+   return false;
+ } 
+ else
+   return true;
+}
+</script>
+</head>
+<body>
+<form action="success.html"  onsubmit="return validmail(this); "method="post">
+username:<input type="text" name="username" />
+<input type="submit" value="Submit" name="submit" />
+</form>
+</body>
+</html>

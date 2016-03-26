@@ -1,0 +1,256 @@
+<html>
+<head>
+<title>valid</title>
+<script language="javascript">
+function validation(f)
+{
+ var error="";
+
+  error+=validname(f);
+  error+=validpasswd(f);
+  error+=validmail(f);
+  error+=validph(f);
+  error+=validradio(f);
+  error+=validdob(f);
+  error+=validcheckbox(f);
+  error+=validtarea(f);
+ if (error!="") {
+    alert(error);
+    return false;
+  }
+  return true;
+}
+function validname(fl)
+ {
+    var err="";
+    var reg=/\W/; 
+ 
+    if (fl.username.value=="") {
+        fl.username.style.background = 'Yellow'; 
+        err="enter a username.\n";
+    } else if ((fl.username.value.length < 5) || (fl.username.value.length > 15)) {
+        fl.username.style.background = 'Yellow'; 
+        err="username is the wrong length.\n";
+    } else if (reg.test(fl.username.value)) {
+        fl.username.style.background = 'Yellow'; 
+        err=" contains illegal characters.\n";
+    } else {
+        fl.username.style.background = 'White';
+    }
+     return err;
+ }
+function validpasswd(fl) 
+{
+    var err="";
+    var reg=/[\W]/; 
+ 
+    if (fl.passwd.value=="")
+    {
+        fl.passwd.style.background = 'Yellow'; 
+        err="enter a password.\n";
+    } 
+    else if ((fl.passwd.value.length < 5) || (fl.passwd.value.length > 15))
+      {
+        fl.passwd.style.background = 'Yellow'; 
+        err="password is the wrong length.\n";
+    } 
+    else if (reg.test(fl.passwd.value)) 
+    {
+        fl.passwd.style.background = 'Yellow'; 
+        err=" contains illegal characters.\n";
+    } 
+    else 
+    {
+        fl.passwd.style.background = 'White';
+    }
+     return err;
+}
+function validmail(f1)
+{
+   var a=f1.mail.value.indexOf('@');
+   var b=f1.mail.value.lastIndexOf('.');
+   var err="";
+   if(a==0||b-a<=1)
+   {
+       f1.mail.style.background='yellow';
+       err=" invalid email id. \n";
+   }
+    else
+   {
+         f1.mail.style.background='white';       
+   }
+     return err;
+}
+function validph(fl) {
+    var err="";
+    var phlen = fl.phone.value.replace(/[\-\ ]/g, '');    
+
+   if (fl.phone.value == "") {
+        err= " enter a phone number.\n";
+        fl.phone.style.background = 'Yellow';
+    } else if (isNaN(parseInt(phlen))) {
+        err= " contains illegal characters.\n";
+        fl.phone.style.background = 'Yellow';
+    } else if (!(phlen.length == 10)) {
+        err= " phone number is the wrong length.enter again.\n";
+        fl.phone.style.background = 'Yellow';
+    }
+    
+    return err;
+}
+function validradio(f1)
+{
+   var err="";
+   if((f1.gender[0].checked==false)&&(f1.gender[1].checked==false))
+    {
+      f1.gender[0].style.background='yellow';
+      f1.gender[1].style.background='yellow';
+      err=" select a gender.\n";
+    }
+   else
+   {
+      f1.gender[0].style.background='white';
+      f1.gender[1].style.background='white';   
+   } 
+   return err;
+}
+function validdob(f1)
+{
+    var err="";
+   if((f1.s1.selectedIndex==0)||(f1.s3.selectedIndex==0)||(f1.s2.selectedIndex==0))
+   {
+     f1.s1.style.background='yellow';
+     f1.s2.style.background='yellow';
+     f1.s3.style.background='yellow';
+     err=" enter the date of birth .\n ";
+   }
+    else
+   {
+     f1.s1.style.background='white';
+     f1.s2.style.background='white';   
+     f1.s3.style.background='white';
+    }
+ return err;
+}
+function validcheckbox(f1)
+{
+   var err="";
+   if(f1.telugu.checked==false&&f1.english.checked==false&&f1.hindi.checked==false&&f1.tamil.checked==false)
+   {
+       f1.telugu.style.background='yellow';
+       f1.english.style.background='yellow';
+       f1.hindi.style.background='yellow';
+       f1.tamil.style.background='yellow';
+       err=" select a language you know. \n ";
+   }
+    else
+   {
+       
+       f1.telugu.style.background='white';
+       f1.english.style.background='white';
+       f1.hindi.style.background='white';
+       f1.tamil.style.background='white';
+    }
+    return err;
+}
+function validtarea(f1)
+{
+    var err="";
+  if(f1.tarea.value=="")
+  { 
+       f1.tarea.style.background='yellow';
+       err=" enter the address. \n";
+  }
+  else if(f1.tarea.value.length>100)
+  {
+       var a=f1.tarea.value.length-100;
+       f1.tarea.style.background='yellow';
+       err="exceeded limit remove "+a+" characters. \n";
+  }
+  else
+  {
+     f1.tarea.style.background='white';                
+  }
+   return err;
+}
+</script>
+</head>
+<body bgcolor="AliceBlue ">
+<form action="success.html"  onsubmit="return validation(this);" method="post">
+<table align="center" cellpadding="5">
+<tr><th colspan="2"><img src="g.jpeg" width="100" height="100" /></th></tr>
+<tr><th colspan="2"><h3>REGISTRATION FORM</h3></th></tr>
+<tr><th>Login:</th><th><input type="text" name="username" /><br/></th></tr>
+<tr><th>Password:</th><th><input type="password" name="passwd" /><br/></th></tr>
+<tr><th>E-mail id:</th><th><input type="text" name="mail" /><br/></th></tr>
+<tr><th>Phone number:</th><th><input type="text" name="phone" /><br/></th></tr>
+<tr><th>Gender</th><th><input type="radio" name="gender" value="male" />male
+        <input type="radio" name="gender" value="female"/>female<br/></th></tr>
+<tr><th>DOB:</th><th><select name="s1">
+<option value="0">day</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
+</select>
+<select name="s2">
+<option value="0">month</option>
+<option value="jan">jan</option>
+<option value="feb">feb</option>
+<option value="mar">mar</option>
+<option value="apr">apr</option>
+<option value="may">may</option>
+<option value="jun">jun</option>
+<option value="jul">jul</option>
+<option value="aug">aug</option>
+<option value="sep">sep</option>
+<option value="oct">oct</option>
+<option value="nov">nov</option>
+<option value="dec">dec</option>
+</select>
+<select name="s3">
+<option value="0">year</option>
+<option value="1990">1990</option>
+<option value="1991">1991</option> 
+<option value="1992">1992</option>
+<option value="1993">1993</option>
+</select><br/></th></tr>
+<tr><th rowspan="4">langauges known</th><th>
+<input type="checkbox" name="english" value="english"       />english<br /></th></tr>
+<tr><th><input type="checkbox" name="telugu" value="telugu" />telugu<br/></th></tr> 
+<tr><th><input type="checkbox" name="hindi" value="hindi"   />hindi<br /></th></tr>
+<tr><th><input type="checkbox" name="tamil" value="tamil"   />tamil<br/></th></tr>
+<tr><th>Address</th><th><textarea rows="10" cols="40"  name="tarea"/>address</textarea></th></tr>
+<tr><th>&nbsp</th><th><input type="submit" value="Submit" name="submit" />
+        <input type="reset" value="reset" name="reset" /><br/></th></tr>
+</table>
+</form>
+</body>
+</html>

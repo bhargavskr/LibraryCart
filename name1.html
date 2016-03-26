@@ -1,0 +1,36 @@
+<html>
+<head><title>hi</title>
+<script language="javascript">
+function validname(fl) {
+    var error ="";
+    var reg=/\W/; 
+ 
+    if (fl.username.value=="") {
+        fl.username.style.background = 'Yellow'; 
+        error = "enter a username.\n";
+    } else if ((fl.username.value.length < 5) || (fl.username.value.length > 15)) {
+        fl.username.style.background = 'Yellow'; 
+        error = "username is the wrong length.\n";
+    } else if (reg.test(fl.username.value)) {
+        fl.username.style.background = 'Yellow'; 
+        error = " contains illegal characters.\n";
+    } else {
+        fl.username.style.background = 'White';
+    }
+   if (error!="") {
+    alert(error);
+    return false;
+  }
+
+  return true;
+}
+</script>
+</head>
+<body>
+<form name="demo" onsubmit="return validname(this)" action="test.htm">
+username:
+   <input name="username" size="30" maxlength="30" type="passwd">
+<input name="Submit" value="Send" type="submit" >
+</form>
+</body>
+</html>

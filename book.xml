@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookinfo SYSTEM "book.dtd">
+<?xml-stylesheet type="text/xsl" href="book.xsl"?>
+<bookinfo>
+	<book>
+		<title>JAVA</title>
+		<author>R S RAJU</author>
+		<ISBN>AKASDSAKHK</ISBN>
+		<publisher>S CHAND</publisher>
+		<edition>4</edition>
+		<price>78</price>
+	</book>
+	<book>
+		<title>C++</title>
+		<author>D SWAMY</author>
+		<ISBN>SDKJKD8SAJSAK</ISBN>
+		<publisher>PEARSON</publisher>
+		<edition>4</edition>
+		<price>67</price>
+	</book>
+	<book>
+		<title>ORACLE</title>
+		<author>K RAVI</author>
+		<ISBN>8GSAJDJ8</ISBN>
+		<publisher>MCGRAWAL</publisher>
+		<edition>3</edition>
+		<price>78</price>
+	</book>
+	<book>
+		<title>MATHS</title>
+		<author>NARAYANAN</author>
+		<ISBN>ASFGHASASA6</ISBN>
+		<publisher>S CHAND</publisher>
+		<edition>2</edition>
+		<price>98</price>
+	</book>
+</bookinfo>

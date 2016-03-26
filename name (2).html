@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>valid</title>
+<script language="javascript">
+function validname()
+{
+  var err="";
+  var reg=new RegExp("^[a-zA-Z0-9_]*$");
+  
+  if(document.f1.username.value="")
+  {
+      
+      document.f1.username.style.background='yellow';
+      err=" enter the username";
+  } 
+  else if((document.f1.username.value.length<6)||(document.f1.username.value.length>15))
+  {
+       
+      document.f1.username.style.background='yellow';
+      err=" enter the correct length of username ";
+   }
+   else if(!reg.test(document.f1.username.value))
+   {
+       document.f1.username.style.background='yellow';
+      err=" contain illegal charater";  
+   }
+   else
+  {
+        document.f1.username.style.background='white';
+   }
+
+ if(err!="")
+ { 
+   alert(err);
+   return false;
+ } 
+ else
+   return true;
+}
+</script>
+</head>
+<body>
+<form action="success.html" name="f1" onsubmit="return validname();" method="post">
+username:<input type="text" name="username" />
+<input type="submit" value="Submit" name="submit" />
+</form>
+</body>
+</html>

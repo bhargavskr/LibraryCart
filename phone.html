@@ -1,0 +1,38 @@
+<html>
+<head><title>hi</title>
+<script language="javascript">
+function validph(fl) {
+    var error = "";
+    var phlen = fl.phone.value.replace(/[\-\ ]/g, '');    
+
+   if (fl.phone.value == "") {
+        error = " enter a phone number.\n";
+        fl.phone.style.background = 'Yellow';
+    } else if (isNaN(parseInt(phlen))) {
+        error = " contains illegal characters.\n";
+        fl.phone.style.background = 'Yellow';
+    } else if (!(phlen.length == 10)) {
+        error = " phone number is the wrong length.enter again\n";
+        fl.phone.style.background = 'Yellow';
+    }
+      else
+    {
+        f1.phone.style.background='white';
+    }
+   if (error!="") {
+    alert(error);
+    return false;
+  }
+
+  return true;
+}
+</script>
+</head>
+<body>
+<form name="demo" onsubmit="return validph(this)" action="test.htm">
+username:
+   <input name="phone" size="35" maxlength="25" type="text">
+<input name="Submit" value="Send" type="submit" >
+</form>
+</body>
+</html>

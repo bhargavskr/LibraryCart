@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>valid</title>
+<script language="javascript">
+function validcheckbox(f1)
+{
+   var err=" ";
+   if(f1.telugu.checked==false&&f1.english.checked==false&&f1.hindi.checked==false&&f1.tamil.checked==false)
+   {
+       f1.telugu.style.background='yellow';
+       f1.english.style.background='yellow';
+       f1.hindi.style.background='yellow';
+       f1.tamil.style.background='yellow';
+       err=" select a language you know ";
+   }
+    else
+   {
+       
+       f1.telugu.style.background='white';
+       f1.english.style.background='white';
+       f1.hindi.style.background='white';
+       f1.tamil.style.background='white';
+    }
+if(err!=" ")
+ { 
+   alert(err);
+   return false;
+ } 
+ else
+   return true;
+}
+</script>
+</head>
+<body>
+<form action="success.html"  onsubmit="return validcheckbox(this); "method="post">
+<input type="checkbox" name="english" value="english"       />english<br />
+<input type="checkbox" name="telugu" value="telugu" />telugu<br/>
+<input type="checkbox" name="hindi" value="hindi"   />hindi<br />
+<input type="checkbox" name="tamil" value="tamil"   />tamil<br/>
+<input type="submit" value="Submit" name="submit" />
+</form>
+</body>
+</html>

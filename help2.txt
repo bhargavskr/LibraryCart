@@ -1,0 +1,375 @@
+	
+
+JavaScript: Form Validation
+	Print 	
+
+Any interactive web site has form input - a place where the users input different kind of information. This data is passed to ASP script, or some other technology and if the data contains an error, there will be a delay before the information travels over the Internet to the server, is examined on the server, and then returns to the user along with an error message.
+
+If you run a validation of the user’s form input before the form is submitted, there will be no wait time and redundant load on the server. "Bad data" are already filtered out when input is passed to the server-based program. It also allows to simplify server-based program.
+
+Client side form validation usually done with javascript. For the majority of your users, JavaScript form validation will save a lot of time up front, but double-checking the data on the server remains necessary, in case the user has turned JavaScript off.
+
+Form data that typically are checked by a JavaScript could be:
+
+    Required fields
+    Valid user name
+    Valid password
+    Valid e-mail address
+    Valid phone number 
+
+validateFormOnSubmit ( )
+
+This is a main function that calls a series of subfunctions, each of which checks a single form element for compliance. If the element complies than sufunction returns an empty string. Otherwise it returns a message describing the error and highlight appropriate element with yellow.
+function validateFormOnSubmit(theForm) {
+var reason = "";
+
+  reason += validateUsername(theForm.username);
+  reason += validatePassword(theForm.pwd);
+  reason += validateEmail(theForm.email);
+  reason += validatePhone(theForm.phone);
+  reason += validateEmpty(theForm.from);
+      
+  if (reason != "") {
+    alert("Some fields need correction:\n" + reason);
+    return false;
+  }
+
+  return true;
+}
+
+validateEmpty ( )
+
+The function below checks if a required field has been left empty. If the required field is blank, we return the error string to the main function. If it’s not blank, the function returns an empty string.
+function validateEmpty(fld) {
+    var error = "";
+ 
+    if (fld.value.length == 0) {
+        fld.style.background = 'Yellow'; 
+        error = "The required field has not been filled in.\n"
+    } else {
+        fld.style.background = 'White';
+    }
+    return error;  
+}
+
+Back to top
+
+validateUsername ( )
+
+The function below checks if the user entered anything at all in the username field. If it’s not blank, we check the length of the string and permit only usernames that are between 5 and 15 characters. Next, we use the JavaScript regular expression /\W/ to forbid illegal characters from appearing in usernames. We want to allow only letters, numbers and underscopes.
+function validateUsername(fld) {
+    var error = "";
+    var illegalChars = /\W/; // allow letters, numbers, and underscores
+ 
+    if (fld.value == "") {
+        fld.style.background = 'Yellow'; 
+        error = "You didn't enter a username.\n";
+    } else if ((fld.value.length < 5) || (fld.value.length > 15)) {
+        fld.style.background = 'Yellow'; 
+        error = "The username is the wrong length.\n";
+    } else if (illegalChars.test(fld.value)) {
+        fld.style.background = 'Yellow'; 
+        error = "The username contains illegal characters.\n";
+    } else {
+        fld.style.background = 'White';
+    }
+    return error;
+}
+
+Back to top
+
+validatePassword ( )
+
+The function below checks the password field for blankness and allow only letters and numbers - no underscopes this time. So we should use a new regular expression to forbid underscopes. This one /[\W_]/ allow only letters and numbers. Next, we want to permit only passwords that contain letters and at least one numeral. For that we use the seacrh() method and two more regular expressions: /(a-z)+/ and /(0-9)/.
+function validatePassword(fld) {
+    var error = "";
+    var illegalChars = /[\W_]/; // allow only letters and numbers 
+ 
+    if (fld.value == "") {
+        fld.style.background = 'Yellow';
+        error = "You didn't enter a password.\n";
+    } else if ((fld.value.length < 7) || (fld.value.length > 15)) {
+        error = "The password is the wrong length. \n";
+        fld.style.background = 'Yellow';
+    } else if (illegalChars.test(fld.value)) {
+        error = "The password contains illegal characters.\n";
+        fld.style.background = 'Yellow';
+    } else if (!((fld.value.search(/(a-z)+/)) && (fld.value.search(/(0-9)+/)))) {
+        error = "The password must contain at least one numeral.\n";
+        fld.style.background = 'Yellow';
+    } else {
+        fld.style.background = 'White';
+    }
+   return error;
+}  
+
+Back to top
+
+validateEmail ( )
+
+Next we want to see if the email address the user entered is real. This means that the input data must contain at least an @ sign and a dot (.). Also, the @ must not be the first character of the email address, and the last dot must at least be one character after the @ sign. 
+
+At first we check if the user entered anything at all in the email field. Next, we use regular expression and the test() method to check the field for a compliance. Also we will use trim() function that will trim leading whitespace off the string. This won’t be perfect validation — it is possible to slip not compliant addresses by it — but it's normally good enough.
+
+function trim(s)
+{
+  return s.replace(/^\s+|\s+$/, '');
+}
+
+function validateEmail(fld) {
+    var error="";
+    var tfld = trim(fld.value);                        // value of field with whitespace trimmed off
+    var emailFilter = /^[^@]+@[^@.]+\.[^@]*\w\w$/ ;
+    var illegalChars= /[\(\)\<\>\,\;\:\\\"\[\]]/ ;
+   
+    if (fld.value == "") {
+        fld.style.background = 'Yellow';
+        error = "You didn't enter an email address.\n";
+    } else if (!emailFilter.test(tfld)) {              //test email for illegal characters
+        fld.style.background = 'Yellow';
+        error = "Please enter a valid email address.\n";
+    } else if (fld.value.match(illegalChars)) {
+        fld.style.background = 'Yellow';
+        error = "The email address contains illegal characters.\n";
+    } else {
+        fld.style.background = 'White';
+    }
+    return error;
+}
+
+Back to top
+
+validatePhone ( )
+
+The function below checks if the phone number is valid. At first we use regular expression and the replace() method to clear out any spacer characters. Next, we use the isNaN() function to check if the phone number contain only numbers. At last we check the length of the string and permit only phone numbers with 10 digits.
+function validatePhone(fld) {
+    var error = "";
+    var stripped = fld.value.replace(/[\(\)\.\-\ ]/g, '');    
+
+   if (fld.value == "") {
+        error = "You didn't enter a phone number.\n";
+        fld.style.background = 'Yellow';
+    } else if (isNaN(parseInt(stripped))) {
+        error = "The phone number contains illegal characters.\n";
+        fld.style.background = 'Yellow';
+    } else if (!(stripped.length == 10)) {
+        error = "The phone number is the wrong length. Make sure you included an area code.\n";
+        fld.style.background = 'Yellow';
+    }
+    return error;
+}
+
+HTML Form
+
+This script accompanies an HTML form. When the user clicks the Submit button on the form, the form data is sent to a JavaScript validation function that checks each field to make sure that it is in the appropriate format. The HTML form could look something like this:
+<html>
+<head>
+<title>WebCheatSheet - JavaScript Tutorial</title>
+</head>
+<body>
+<h1>WebCheatSheet - JavaScript Tutorial</h1>
+
+<form name="demo" onsubmit="return validateFormOnSubmit(this)" action="test.htm">
+<table summary="Demonstration form">
+  <tbody>
+  <tr>
+    <td><label for="username">Your user name:</label></td>
+    <td><input name="username" size="35" maxlength="50" type="text"></td>
+  </tr>   
+  <tr>
+    <td><label for="pwd">Your password</label></td>
+    <td><input name="pwd" size="35" maxlength="25" type="password"></td>
+  </tr>   
+  <tr>
+    <td><label for="email">Your email:</label></td>
+    <td><input name="email" size="35" maxlength="30" type="text"></td>
+  </tr>  
+  <tr>
+    <td><label for="phone">Your telephone number:</label></td>
+    <td><input name="phone" size="35" maxlength="25" type="text"></td>
+  </tr>   
+  <tr>
+    <td>
+        <label for="from">Where are you :</label></td>
+    <td><input name="from" size="35" maxlength="50" type="text"></td>
+  </tr>   
+  <tr>
+    <td>&nbsp;</td>
+    <td><input name="Submit" value="Send" type="submit" ></td>
+    <td>&nbsp;</td>
+  </tr>
+  </tbody>
+</table>
+</form>
+
+
+</body>
+</html>
+
+Back to top
+	
+ 
+ 
+
+
+
+Tags: JAVASCRIPT FORM VALIDATION CLIENT-SIDE EMPTY NAME PASSWORD PHONE REGULAR EXPRESSIONS
+
+Add To: Add to dzone dzone | Digg this digg | Add to del.icio.us del.icio.us | Stumble it stumbleupon
+thankz i'm need this for my newbie project.
+# Posted by joe | 13 Feb 2007 19:24:21
+Thanks for this. I am not an expert in reguar expressions and I had problems with the ones in this example in the password validation.
+
+To get it to work, I changed:
+
+else if (!((fld.value.search(/(a-z)+/)) && (fld.value.search(/(0-9)+/)))) {
+
+to:
+else if (!((fld.value.search(/[a-zA-Z]+/)) && (fld.value.search(/[0-9]+/)))) {
+
+ie changed the ( ) to [ ] and allowed uppercase
+
+Also, I couldnt get the above test to work because if there was no number in the string (for example) the numeral test correctly returns -1, if there is a number in the first position, the test correctly returns 0 (the zero based position of the first match) and if there is a numeral after position 1, it correctly returns a positive integer. Now, what I think is happenning is that -1 and 1 are both "true" as far as JS goes and zero is "false" so the individual test returns false even if there is a character in position 1 and true if there is no number ! In the anding of the two tests it ends up wrong.
+
+So, to simplify the logic I used
+
+else if ( (fld.value.search(/[a-zA-Z]+/)==-1) || (fld.value.search(/[0-9]+/)==-1) ) {
+
+ie if either test doesnt have the required characters, fail the test
+
+Cheers,
+Murray
+
+
+
+(fldVal.search(/[a-zA-Z]+/)==-1)
+# Posted by Murray | 2 Aug 2007 20:12:40
+I am trying to use this script. But it does not work at all. I even did a straight copy and paste of your code and it does not work. I tried it on Mozilla 2.0 and IE 7.0
+
+Could you please tell me what I might be doing wrong?
+
+I can gladly email you the link of the pages.
+
+Thank You,
+
+ParE
+# Posted by ParE | 12 Aug 2007 16:39:29
+Does anybody know how I can trigger an event to validate immediately after the predictive text select dropdown has been clicked check out my form validation at http://viagraprescription.co.uk
+# Posted by Buy Viagra Online | 11 Nov 2007 06:37:36
+Great tutorial, but I miss 1 thing: you don't check if JavaScript is turned off. I think this is the source of the problem of ParE
+# Posted by Maco | 25 Nov 2007 05:47:34
+could you please suggest how to clear or disable the javascript validations.
+
+i have page wich genrates the radiobuttons dynamically depending on the fields in the database.
+i want to disable the javascript validation for selection of rbtn on click event of previous button.
+
+please help
+# Posted by Amit | 15 Feb 2008 02:24:55
+for form validation, i have visited many sites but this one seem better.
+so...thnx.
+# Posted by PeeCee | 21 Feb 2008 09:20:49
+well done..
+tnx for the source code...
+
+but i need to modify some error that i encountered
+# Posted by jose morales | 9 Mar 2008 06:40:47
+The phone validation does not work correctly, the javascript only checks the first character of the entry.
+
+ie. you can enter 11122233aa and it is valid
+or 1aabbbccdd
+# Posted by John | 18 Apr 2008 02:43:04
+I need to look for strings where all characters entered equals blanks. I could check for char(0) equaling blanks, but I want to allow leading spaces so " tree " can be searched and values like "Street" will not be returned. I am building filters for search inquiries, and want to disallow " " and allow " x". Any help appreciated.
+
+Cheers,
+Mark
+# Posted by mark mason | 9 May 2008 05:53:52
+my question is how to validate first name and last name column i,e it should take only characters it shouldnt take numers etc.
+# Posted by swetha | 16 May 2008 05:00:05
+Is this all within one file "test.htm" Or can/should the script be included within the <head>
+# Posted by Cody | 22 May 2008 15:01:50
+it is working great ! thanks. Can you please let me know how I can email contents of the form to an email id ?
+
+Thanks
+
+# Posted by Mini | 29 May 2008 14:09:40
+cool but how do you validate a simple form without password and including drop down menus and check boxes??
+# Posted by John Boyd | 4 Jun 2008 13:45:24
+thanks
+# Posted by zubair | 10 Jun 2008 02:03:11
+The phone validation does not work correctly, the javascript only checks the first character of the entry.
+
+ie. you can enter 11122233aa and it is valid
+or 1aabbbccdd
+
+To solve that problem you want to change
+
+"else if (isNaN(parseInt(stripped)))"
+
+to
+
+"else if (isNaN(stripped))"
+# Posted by hide | 13 Mar 2009 15:26:49
+Thanks a lot for this code.
+# Posted by ANS | 2 Jun 2009 16:24:30
+function trimAll(sString)
+{
+while (sString.substring(0,1) == ' ')
+{
+sString = sString.substring(1, sString.length);
+}
+
+while (sString.substring(sString.length-1, sString.length) == ' ')
+{
+sString = sString.substring(0,sString.length-1);
+}
+return sString;
+}
+function isBlank(obj,objval,msg)
+{
+if(objval == "")
+{
+
+//alert("- " + msg + " is required.");
+message = "- " + msg + " is required.";
+//message = "- " + msg;
+alert(message);
+if(obj.type != 'textarea')
+obj.focus();
+return false;
+}
+else
+return true;
+}
+function isEmail(IsItReal,IsItRealval,name)
+{
+if (IsItRealval != "")
+{
+var valEmail = IsItRealval;
+var reg = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
+if(reg.test(valEmail))
+return true;
+else
+{
+//alert('- Invalid '+name+'.')
+
+message = "- Invalid "+name+".";
+//message = "- "+name;
+alert(message);
+IsItReal.focus();
+return false;
+}
+
+}
+else
+{
+//alert('- '+name+' is required.')
+
+
+message = '- '+name+' is required.';
+alert(message);
+IsItReal.focus();
+return false;
+}
+
+}
+if(!isBlank(ObjFrm.MCATXintCatId0,trimAll(ObjFrm.MCATXintCatId0.value),"Article Category")) return false;

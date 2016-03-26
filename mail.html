@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>valid</title>
+<script language="javascript">
+function validmail(f1)
+{
+   var a=f1.mail.value.indexOf('@');
+   var b=f1.mail.value.lastIndexOf('.');
+   var err=" ";
+   if(a==0||b-a<=1)
+   {
+       f1.mail.style.background='yellow';
+       err=" invalid email id";
+   }
+    else
+   {
+         f1.mail.style.background='white';       
+   }
+if(err!=" ")
+ { 
+   alert(err);
+   return false;
+ } 
+ else
+   return true;
+}
+</script>
+</head>
+<body>
+<form action="success.html"  onsubmit="return validmail(this); "method="post">
+mail<input type="text" name="mail" />
+<input type="submit" value="Submit" name="submit" />
+</form>
+</body>
+</html>

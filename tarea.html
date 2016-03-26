@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>valid</title>
+<script language="javascript">
+function validtarea(f1)
+{
+    var err="";
+  if(f1.tarea.value=="")
+  { 
+       f1.tarea.style.background='yellow';
+       err=" enter the address ";
+  }
+  else if(f1.tarea.value.length>100)
+  {
+       var a=f1.tarea.value.length-100;
+       f1.tarea.style.background='yellow';
+       err="exceeded limit remove "+a+" characters";
+  }
+  else
+  {
+     f1.tarea.style.background='white';                
+  }
+if(err!="")
+ { 
+   alert(err);
+   return false;
+ } 
+ else
+   return true;
+}
+</script>
+</head>
+<body>
+<form action="success.html"  onsubmit="return validtarea(this);" method="post">
+<textarea  name="tarea" rows="10" cols="40" />address</textarea>
+<input type="submit" value="Submit" name="submit" />
+</form>
+</body>
+</html>
